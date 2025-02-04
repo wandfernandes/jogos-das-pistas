@@ -11,7 +11,7 @@
             text-align: center;
             margin: 0;
             padding: 0;
-            background: url(https://drive.google.com/file/d/1miMk1WTVpS_tOcfJNYrD-B_b2uxdAtc_/view?usp=drive_link) no-repeat center center fixed;
+            background: url('https://drive.google.com/uc?export=view&id=1miMk1WTVpS_tOcfJNYrD-B_b2uxdAtc_') no-repeat center center fixed;
             background-size: cover;
             color: #fff;
             overflow-x: hidden;
