@@ -111,7 +111,7 @@
 </head>
 <body>
     <div id="inicio">
-        <h1>🌸 Caça ao Tesouro Romântica - Florianópolis 🌸</h1>
+        <h1>🌸 Caça ao Tesouro - Florianópolis 🌸</h1>
         <p>Escolha seu avatar romântico:</p>
         <div class="avatar-selection">
             <img src="https://example.com/avatar1.png" class="avatar" alt="Avatar 1" onclick="selecionarAvatar('avatar1')">
