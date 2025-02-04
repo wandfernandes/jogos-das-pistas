@@ -1,132 +1,220 @@
-const pistasOriginais = [
-    { charada: "🌊 Um espelho d’água cercado por dunas e natureza. Casais adoram remar aqui. Onde estou?", latitude: -27.5969, longitude: -48.4846, nome: "Lagoa da Conceição" },
-    { charada: "🌉 Uma ponte que une passado e presente, iluminando noites românticas. Onde estou?", latitude: -27.5973, longitude: -48.5515, nome: "Ponte Hercílio Luz" },
-    { charada: "🏄‍♂️ Dunas douradas onde aventureiros deslizam ao vento. Um encontro perfeito. Onde estou?", latitude: -27.6206, longitude: -48.4354, nome: "Dunas da Joaquina" },
-    { charada: "🏖️ Um paraíso de luxo e diversão onde o pôr do sol é digno de aplausos. Onde estou?", latitude: -27.4368, longitude: -48.4916, nome: "Praia de Jurerê" },
-    { charada: "🍽️ Frutos do mar, cultura e encontros românticos entre as mesas. Onde estou?", latitude: -27.5951, longitude: -48.5480, nome: "Mercado Público" },
-    { charada: "🌅 No alto da ilha, uma vista que revela toda a beleza de Floripa. Onde estou?", latitude: -27.5888, longitude: -48.5350, nome: "Mirante do Morro da Cruz" }
-];
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caça ao Tesouro Romântica - Florianópolis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Template de design vibrante e moderno */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(45deg, #ff4081, #6200ea);
+            color: #fff;
+            margin: 0;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        h1, h2 {
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.6);
+            font-size: 3rem;
+        }
+        button {
+            background: linear-gradient(45deg, #ff4081, #e91e63);
+            border: none;
+            color: white;
+            padding: 20px 30px;
+            font-size: 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            transform: scale(1.1);
+            background: #e91e63;
+        }
+        #mapa {
+            width: 100%;
+            height: 500px;
+            margin-top: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .pista-container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 15px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        /* Animação de fade-in */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        /* Avatar interativo */
+        .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: url('https://example.com/avatar.jpg') no-repeat center;
+            background-size: cover;
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            animation: float 2s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+        input {
+            padding: 15px;
+            font-size: 1.2rem;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
 
-let pistas = [];
-let indiceAtual = 0;
+    <div class="avatar"></div>
 
-document.getElementById('identification-form').addEventListener('submit', function(event) {
-    event.preventDefault();
+    <div id="inicio">
+        <h1>🌸 Caça ao Tesouro Romântica 🌸</h1>
+        <p>Descubra as belezas de Florianópolis e desvende os mistérios do amor!</p>
+        <input type="text" id="chave" placeholder="Digite sua chave secreta">
+        <button onclick="iniciarJogo()">Iniciar Jogo</button>
+    </div>
 
-    const nome = document.getElementById('nome').value;
-    const cidade = document.getElementById('cidade').value;
-    const dataJogo = document.getElementById('data-jogo').value;
+    <div class="pista-container" id="pista-container" style="display:none;">
+        <h2 id="pista">🌊 Local da Primeira Pista</h2>
+        <p id="mensagem">Descubra a pista nas belezas naturais de Florianópolis!</p>
+        <button onclick="verificarLocalizacao()">Verificar Localização</button>
+        <div id="mapa"></div>
+    </div>
 
-    document.getElementById('user-nome').innerText = nome;
-    document.getElementById('user-cidade').innerText = cidade;
-    document.getElementById('user-data').innerText = new Date(dataJogo).toLocaleDateString('pt-BR');
+    <audio id="somCorreto" src="https://www.soundjay.com/button/beep-07.wav"></audio>
+    <audio id="somIncorreto" src="https://www.soundjay.com/button/beep-10.wav"></audio>
+    <audio id="musicaFundo" src="https://www.soundjay.com/nature/sounds/rain-01.mp3" loop></audio>
 
-    document.getElementById('form-container').classList.remove('active');
-    document.getElementById('inicio-container').classList.add('active');
-});
+    <script>
+        const pistasOriginais = [
+            { charada: "🌊 Um espelho d’água cercado por dunas e natureza. Casais adoram remar aqui. Onde estou?", latitude: -27.5969, longitude: -48.4846, nome: "Lagoa da Conceição" },
+            { charada: "🌉 Uma ponte que une passado e presente, iluminando noites românticas. Onde estou?", latitude: -27.5973, longitude: -48.5515, nome: "Ponte Hercílio Luz" },
+            { charada: "🏄‍♂️ Dunas douradas onde aventureiros deslizam ao vento. Um encontro perfeito. Onde estou?", latitude: -27.6206, longitude: -48.4354, nome: "Dunas da Joaquina" },
+            { charada: "🏖️ Um paraíso de luxo e diversão onde o pôr do sol é digno de aplausos. Onde estou?", latitude: -27.4368, longitude: -48.4916, nome: "Praia de Jurerê" },
+            { charada: "🍽️ Frutos do mar, cultura e encontros românticos entre as mesas. Onde estou?", latitude: -27.5951, longitude: -48.5480, nome: "Mercado Público" },
+            { charada: "🌅 No alto da ilha, uma vista que revela toda a beleza de Floripa. Onde estou?", latitude: -27.5888, longitude: -48.5350, nome: "Mirante do Morro da Cruz" }
+        ];
 
-function mostrarPista() {
-    pistas = embaralharPistas("chave-fixa-teste");
+        let pistas = [];
+        let indiceAtual = 0;
 
-    document.getElementById('inicio-container').classList.remove('active');
-    document.getElementById('pista-container').classList.add('active');
-    document.getElementById("musicaFundo").play();
-    criarCorações();
-    exibirPista();
-}
+        function iniciarJogo() {
+            let chave = document.getElementById("chave").value.trim();
+            if (chave === "") {
+                alert("Digite uma chave válida!");
+                return;
+            }
 
-function embaralharPistas(chave) {
-    let seed = hashString(chave);
-    let pistasEmbaralhadas = [...pistasOriginais];
+            pistas = embaralharPistas(chave);
 
-    for (let i = pistasEmbaralhadas.length - 1; i > 0; i--) {
-        let j = seed % (i + 1);
-        [pistasEmbaralhadas[i], pistasEmbaralhadas[j]] = [pistasEmbaralhadas[j], pistasEmbaralhadas[i]];
-        seed = (seed * 33) % 1000003;
-    }
+            document.getElementById("inicio").style.display = "none";
+            document.getElementById("pista-container").style.display = "block";
+            mostrarPista();
+            document.getElementById("musicaFundo").play();
+        }
 
-    return pistasEmbaralhadas;
-}
+        function embaralharPistas(chave) {
+            let seed = hashString(chave);
+            let pistasEmbaralhadas = [...pistasOriginais];
 
-function hashString(str) {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-        hash = (hash * 31 + str.charCodeAt(i)) % 1000003;
-    }
-    return hash;
-}
+            for (let i = pistasEmbaralhadas.length - 1; i > 0; i--) {
+                let j = seed % (i + 1);
+                [pistasEmbaralhadas[i], pistasEmbaralhadas[j]] = [pistasEmbaralhadas[j], pistasEmbaralhadas[i]];
+                seed = (seed * 33) % 1000003;
+            }
 
-function exibirPista() {
-    document.getElementById("pista").textContent = pistas[indiceAtual].charada;
-    document.getElementById("mensagem").textContent = `Vá até ${pistas[indiceAtual].nome} e clique no botão abaixo!`;
-    mostrarMapa(pistas[indiceAtual].latitude, pistas[indiceAtual].longitude);
-}
+            return pistasEmbaralhadas;
+        }
 
-function verificarLocalizacao() {
-    // Coordenadas fixas para facilitar os testes
-    const coordenadasSimuladas = [
-        { latitude: -27.5969, longitude: -48.4846 },  // Lagoa da Conceição
-        { latitude: -27.5973, longitude: -48.5515 },  // Ponte Hercílio Luz
-        { latitude: -27.6206, longitude: -48.4354 },  // Dunas da Joaquina
-        { latitude: -27.4368, longitude: -48.4916 },  // Praia de Jurerê
-        { latitude: -27.5951, longitude: -48.5480 },  // Mercado Público
-        { latitude: -27.5888, longitude: -48.5350 }   // Mirante do Morro da Cruz
-    ];
+        function hashString(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                hash = (hash * 31 + str.charCodeAt(i)) % 1000003;
+            }
+            return hash;
+        }
 
-    const latUsuario = coordenadasSimuladas[indiceAtual].latitude;
-    const longUsuario = coordenadasSimuladas[indiceAtual].longitude;
-    const latPista = pistas[indiceAtual].latitude;
-    const longPista = pistas[indiceAtual].longitude;
+        function mostrarPista() {
+            document.getElementById("pista").textContent = pistas[indiceAtual].charada;
+            document.getElementById("mensagem").textContent = `Vá até ${pistas[indiceAtual].nome} e clique no botão abaixo!`;
+            mostrarMapa(pistas[indiceAtual].latitude, pistas[indiceAtual].longitude);
+        }
 
-    const distancia = calcularDistancia(latUsuario, longUsuario, latPista, longPista);
+        function verificarLocalizacao() {
+            // Coordenadas fixas para facilitar os testes
+            const coordenadasSimuladas = [
+                { latitude: -27.5969, longitude: -48.4846 },  // Lagoa da Conceição
+                { latitude: -27.5973, longitude: -48.5515 },  // Ponte Hercílio Luz
+                { latitude: -27.6206, longitude: -48.4354 },  // Dunas da Joaquina
+                { latitude: -27.4368, longitude: -48.4916 },  // Praia de Jurerê
+                { latitude: -27.5951, longitude: -48.5480 },  // Mercado Público
+                { latitude: -27.5888, longitude: -48.5350 }   // Mirante do Morro da Cruz
+            ];
 
-    if (distancia < 0.2) {
-        desbloquearProximaPista();
-    } else {
-        document.getElementById("mensagem").textContent = "📍 Você ainda não chegou ao local certo! Continue procurando!";
-        const somIncorreto = document.getElementById("somIncorreto");
-        somIncorreto.play();
-    }
-}
+            const latUsuario = coordenadasSimuladas[indiceAtual].latitude;
+            const longUsuario = coordenadasSimuladas[indiceAtual].longitude;
+            const latPista = pistas[indiceAtual].latitude;
+            const longPista = pistas[indiceAtual].longitude;
 
-function mostrarMapa(lat, long) {
-    document.getElementById("mapa").innerHTML = `<iframe width="100%" height="300" frameborder="0"
-        src="https://www.google.com/maps?q=${lat},${long}&output=embed"></iframe>`;
-}
+            const distancia = calcularDistancia(latUsuario, longUsuario, latPista, longPista);
 
-function calcularDistancia(lat1, lon1, lat2, lon2) {
-    const R = 6371; 
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-              Math.sin(dLon/2) * Math.sin(dLon/2);
-    return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
-}
+            if (distancia < 0.2) {
+                desbloquearProximaPista();
+            } else {
+                document.getElementById("mensagem").textContent = "📍 Você ainda não chegou ao local certo! Continue procurando!";
+                const somIncorreto = document.getElementById("somIncorreto");
+                somIncorreto.play();
+            }
+        }
 
-function desbloquearProximaPista() {
-    const somCorreto = document.getElementById("somCorreto");
-    somCorreto.play();
-    document.getElementById("mensagem").textContent = pistas[indiceAtual].proximaPista;
-    indiceAtual++;
-    if (indiceAtual < pistas.length) {
-        setTimeout(() => {
-            exibirPista();
-            document.getElementById("mensagem").textContent = "";
-        }, 3000);
-    } else {
-        document.getElementById("pista").textContent = "🎉 Parabéns! Você encontrou o tesouro romântico! 🎁";
-        document.getElementById("mensagem").textContent = "";
-    }
-}
+        function mostrarMapa(lat, long) {
+            document.getElementById("mapa").innerHTML = `<iframe width="100%" height="300" frameborder="0"
+                src="https://www.google.com/maps?q=${lat},${long}&output=embed"></iframe>`;
+        }
 
-function criarCorações() {
-    const numCoracoes = 20;
-    for (let i = 0; i < numCoracoes; i++) {
-        const coracao = document.createElement('div');
-        coracao.className = 'heart';
-        coracao.style.left = `${Math.random() * 100}vw`;
-        coracao.style.animationDuration = `${Math.random() * 5 + 5}s`;
-        document.body.appendChild(coracao);
-    }
-}
+        function calcularDistancia(lat1, lon1, lat2, lon2) {
+            const R = 6371; 
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.sin(dLon/2) * Math.sin(dLon/2);
+            return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+        }
+
+        function desbloquearProximaPista() {
+            const somCorreto = document.getElementById("somCorreto");
+            somCorreto.play();
+            document.getElementById("mensagem").textContent = `Parabéns! Você encontrou a próxima pista!`;
+            indiceAtual++;
+            if (indiceAtual < pistas.length) {
+                setTimeout(() => {
+                    mostrarPista();
+                    document.getElementById("mensagem").textContent = "";
+                }, 3000);
+            } else {
+                document.getElementById("pista").textContent = "🎉 Parabéns! Você encontrou o tesouro romântico! 🎁";
+                document.getElementById("mensagem").textContent = "";
+            }
+        }
+    </script>
+</body>
+</html>
