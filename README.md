@@ -10,7 +10,9 @@
             text-align: center;
             margin: 0;
             padding: 0;
-            background: linear-gradient(120deg, #ff758c, #ff7eb3);
+            /* Atualizado para usar uma imagem de fundo */
+            background: url('https://example.com/beach-path.jpg') no-repeat center center fixed;
+            background-size: cover;
             color: #fff;
             overflow-x: hidden;
         }
@@ -112,7 +114,7 @@
             }
 
             pistas = embaralharPistas(chave);
-            
+
             document.getElementById("inicio").style.display = "none";
             document.getElementById("pista-container").style.display = "block";
             mostrarPista();
@@ -122,7 +124,7 @@
         function embaralharPistas(chave) {
             let seed = hashString(chave);
             let pistasEmbaralhadas = [...pistasOriginais];
-            
+
             for (let i = pistasEmbaralhadas.length - 1; i > 0; i--) {
                 let j = seed % (i + 1);
                 [pistasEmbaralhadas[i], pistasEmbaralhadas[j]] = [pistasEmbaralhadas[j], pistasEmbaralhadas[i]];
@@ -175,13 +177,13 @@
         }
 
         function calcularDistancia(lat1, lon1, lat2, lon2) {
-            const R = 6371; 
+            const R = 6371;
             const dLat = (lat2 - lat1) * Math.PI / 180;
             const dLon = (lon2 - lon1) * Math.PI / 180;
-            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
                       Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-                      Math.sin(dLon/2) * Math.sin(dLon/2);
-            return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+                      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
         }
 
         function desbloquearProximaPista() {
