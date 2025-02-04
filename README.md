@@ -139,6 +139,112 @@
                 resposta: "Teatro Goiânia",
                 proximaPista: "Muito bom! Vá até o Teatro Goiânia e encontre um QR Code próximo à bilheteria!",
                 qrCode: "https://www.exemplo.com/qr5.png"
+            },
+            // Adicione mais 15 charadas baseadas na história de Goiânia
+            {
+                charada: "Este parque é conhecido por ser um local de eventos e tem um lago muito visitado. Onde ele está?",
+                opcoes: ["Parque Flamboyant", "Jardim Botânico", "Parque Mutirama"],
+                resposta: "Parque Flamboyant",
+                proximaPista: "Ótimo! Vá até o Parque Flamboyant e encontre um QR Code próximo ao lago!",
+                qrCode: "https://www.exemplo.com/qr6.png"
+            },
+            {
+                charada: "Este monumento homenageia os pioneiros que fundaram a cidade de Goiânia. Onde ele está?",
+                opcoes: ["Monumento dos Três Marcos", "Monumento às Nações Indígenas", "Monumento à Paz Mundial"],
+                resposta: "Monumento dos Três Marcos",
+                proximaPista: "Muito bem! Vá até o Monumento dos Três Marcos e encontre um QR Code próximo ao monumento!",
+                qrCode: "https://www.exemplo.com/qr7.png"
+            },
+            {
+                charada: "Este estádio é a casa do Goiás Esporte Clube. Onde ele está?",
+                opcoes: ["Estádio Serra Dourada", "Estádio Olímpico Pedro Ludovico", "Estádio Hailé Pinheiro"],
+                resposta: "Estádio Hailé Pinheiro",
+                proximaPista: "Ótimo! Vá até o Estádio Hailé Pinheiro e procure um QR Code próximo à entrada principal!",
+                qrCode: "https://www.exemplo.com/qr8.png"
+            },
+            {
+                charada: "Este museu abriga a história de Goiás e fica no centro da cidade. Onde ele está?",
+                opcoes: ["Museu Pedro Ludovico", "Museu de Arte de Goiânia", "Museu Antropológico"],
+                resposta: "Museu Pedro Ludovico",
+                proximaPista: "Muito bem! Vá até o Museu Pedro Ludovico e encontre um QR Code próximo à entrada principal!",
+                qrCode: "https://www.exemplo.com/qr9.png"
+            },
+            {
+                charada: "Este centro cultural é conhecido por suas exposições de arte contemporânea. Onde ele está?",
+                opcoes: ["Centro Cultural Oscar Niemeyer", "Centro Cultural UFG", "Centro Cultural Martim Cererê"],
+                resposta: "Centro Cultural Oscar Niemeyer",
+                proximaPista: "Ótimo! Vá até o Centro Cultural Oscar Niemeyer e encontre um QR Code próximo à entrada principal!",
+                qrCode: "https://www.exemplo.com/qr10.png"
+            },
+            {
+                charada: "Este parque é conhecido por suas trilhas e pela presença de animais. Onde ele está?",
+                opcoes: ["Parque Areião", "Parque Flamboyant", "Bosque dos Buritis"],
+                resposta: "Parque Areião",
+                proximaPista: "Você acertou! Vá até o Parque Areião e encontre um QR Code próximo ao playground!",
+                qrCode: "https://www.exemplo.com/qr11.png"
+            },
+            {
+                charada: "Este monumento é uma das principais atrações turísticas de Goiânia e fica na Praça Cívica. Onde ele está?",
+                opcoes: ["Monumento às Três Raças", "Monumento à Paz Mundial", "Monumento ao Bandeirante"],
+                resposta: "Monumento às Três Raças",
+                proximaPista: "Muito bem! Vá até o Monumento às Três Raças e encontre um QR Code próximo ao monumento!",
+                qrCode: "https://www.exemplo.com/qr12.png"
+            },
+            {
+                charada: "Este parque tem um grande lago e é um ótimo lugar para passeios de barco. Onde ele está?",
+                opcoes: ["Parque Flamboyant", "Parque Vaca Brava", "Parque Areião"],
+                resposta: "Parque Flamboyant",
+                proximaPista: "Ótimo! Vá até o Parque Flamboyant e encontre um QR Code próximo ao lago!",
+                qrCode: "https://www.exemplo.com/qr13.png"
+            },
+            {
+                charada: "Este mercado é famoso por suas frutas frescas e artesanatos. Onde ele está?",
+                opcoes: ["Mercado Central", "Mercado Municipal", "Mercado da 74"],
+                resposta: "Mercado Central",
+                proximaPista: "Ótimo! Vá até o Mercado Central e procure um QR Code próximo à entrada principal!",
+                qrCode: "https://www.exemplo.com/qr14.png"
+            },
+            {
+                charada: "Este espaço cultural é conhecido por suas apresentações teatrais e musicais. Onde ele está?",
+                opcoes: ["Teatro Goiânia", "Centro Cultural UFG", "Teatro Basileu França"],
+                resposta: "Teatro Goiânia",
+                proximaPista: "Muito bom! Vá até o Teatro Goiânia e encontre um QR Code próximo à bilheteria!",
+                qrCode: "https://www.exemplo.com/qr15.png"
+            },
+            {
+                charada: "Este parque é conhecido por suas esculturas e jardins bem cuidados. Onde ele está?",
+                opcoes: ["Bosque dos Buritis", "Parque Areião", "Parque Flamboyant"],
+                resposta: "Bosque dos Buritis",
+                proximaPista: "Ótimo! Vá até o Bosque dos Buritis e encontre um QR Code próximo às esculturas!",
+                qrCode: "https://www.exemplo.com/qr16.png"
+            },
+            {
+                charada: "Este monumento foi construído em homenagem ao fundador de Goiânia. Onde ele está?",
+                opcoes: ["Monumento a Pedro Ludovico", "Monumento às Três Raças", "Monumento ao Bandeirante"],
+                resposta: "Monumento a Pedro Ludovico",
+                proximaPista: "Muito bem! Vá até o Monumento a Pedro Ludovico e encontre um QR Code próximo ao monumento!",
+                qrCode: "https://www.exemplo.com/qr17.png"
+            },
+            {
+                charada: "Este parque é um dos maiores de Goiânia e é conhecido por sua natureza preservada. Onde ele está?",
+                opcoes: ["Parque Areião", "Parque Flamboyant", "Jardim Botânico"],
+                resposta: "Jardim Botânico",
+                proximaPista: "Ótimo! Vá até o Jardim Botânico e encontre um QR Code próximo à entrada principal!",
+                qrCode: "https://www.exemplo.com/qr18.png"
+            },
+            {
+                charada: "Este museu é dedicado à arte contemporânea e está localizado no centro de Goiânia. Onde ele está?",
+                opcoes: ["Museu de Arte de Goiânia", "Museu Pedro Ludovico", "Museu Antropológico"],
+                resposta: "Museu de Arte de Goiânia",
+                proximaPista: "Muito bem! Vá até o Museu de Arte de Goiânia e encontre um QR Code próximo à entrada principal!",
+                qrCode: "https://www.exemplo.com/qr19.png"
+            },
+            {
+                charada: "Este parque é ideal para quem gosta de caminhadas e corridas. Onde ele está?",
+                opcoes: ["Parque Areião", "Parque Vaca Brava", "Parque Flamboyant"],
+                resposta: "Parque Vaca Brava",
+                proximaPista: "Ótimo! Vá até o Parque Vaca Brava e encontre um QR Code próximo ao lago!",
+                qrCode: "https://www.exemplo.com/qr20.png"
             }
         ];
         
@@ -209,23 +315,3 @@
 
         // Leitor de QR Code
         function onScanSuccess(decodedText, decodedResult) {
-            document.getElementById('qr-reader-results').innerHTML = `Código QR Lido: ${decodedText}`;
-            verificarResposta(decodedText);
-        }
-
-        var html5QrcodeScanner = new Html5QrcodeScanner(
-            "qr-reader", { fps: 10, qrbox: 250 });
-        html5QrcodeScanner.render(onScanSuccess);
-
-        // Assistente virtual
-        if (annyang) {
-            const comandos = {
-                'iniciar jogo': iniciarJogo,
-                'responder *resposta': verificarResposta,
-            };
-            annyang.addCommands(comandos);
-            annyang.start();
-        }
-    </script>
-</body>
-</html>
