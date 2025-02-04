@@ -181,6 +181,7 @@
         <p id="mensagem">Descubra a pista nas belezas naturais de Florianópolis!</p>
         <button onclick="desbloquearProximaPista()">Próxima Pista</button>
         <div id="mapa"></div>
+        <p id="curiosidade"></p>
     </div>
 
     <div class="roleta-container" id="roleta-container" style="display:none;">
@@ -203,12 +204,12 @@
 
     <script>
         const pistasOriginais = [
-            { charada: "🌊 Um espelho d’água cercado por dunas e natureza. Casais adoram remar aqui. Onde estou?", latitude: -27.5969, longitude: -48.4846, nome: "Lagoa da Conceição" },
-            { charada: "🌉 Uma ponte que une passado e presente, iluminando noites românticas. Onde estou?", latitude: -27.5973, longitude: -48.5515, nome: "Ponte Hercílio Luz" },
-            { charada: "🏄‍♂️ Dunas douradas onde aventureiros deslizam ao vento. Um encontro perfeito. Onde estou?", latitude: -27.6206, longitude: -48.4354, nome: "Dunas da Joaquina" },
-            { charada: "🏖️ Um paraíso de luxo e diversão onde o pôr do sol é digno de aplausos. Onde estou?", latitude: -27.4368, longitude: -48.4916, nome: "Praia de Jurerê" },
-            { charada: "🍽️ Frutos do mar, cultura e encontros românticos entre as mesas. Onde estou?", latitude: -27.5951, longitude: -48.5480, nome: "Mercado Público" },
-            { charada: "🌅 No alto da ilha, uma vista que revela toda a beleza de Floripa. Onde estou?", latitude: -27.5888, longitude: -48.5350, nome: "Mirante do Morro da Cruz" }
+            { charada: "🌊 Um espelho d’água cercado por dunas e natureza. Casais adoram remar aqui. Onde estou?", latitude: -27.5969, longitude: -48.4846, nome: "Lagoa da Conceição", curiosidade: "A Lagoa da Conceição é um dos cartões-postais mais conhecidos de Florianópolis, famosa por suas águas calmas e esportes aquáticos." },
+            { charada: "🌉 Uma ponte que une passado e presente, iluminando noites românticas. Onde estou?", latitude: -27.5973, longitude: -48.5515, nome: "Ponte Hercílio Luz", curiosidade: "A Ponte Hercílio Luz é a maior ponte pênsil do Brasil e foi inaugurada em 1926. É um símbolo de Florianópolis." },
+            { charada: "🏄‍♂️ Dunas douradas onde aventureiros deslizam ao vento. Um encontro perfeito. Onde estou?", latitude: -27.6206, longitude: -48.4354, nome: "Dunas da Joaquina", curiosidade: "As Dunas da Joaquina são perfeitas para a prática de sandboard, um esporte que consiste em descer as dunas em uma prancha." },
+            { charada: "🏖️ Um paraíso de luxo e diversão onde o pôr do sol é digno de aplausos. Onde estou?", latitude: -27.4368, longitude: -48.4916, nome: "Praia de Jurerê", curiosidade: "Jurerê Internacional é conhecida por suas festas luxuosas, casas noturnas e um público seleto. Um lugar onde luxo e natureza se encontram." },
+            { charada: "🍽️ Frutos do mar, cultura e encontros românticos entre as mesas. Onde estou?", latitude: -27.5951, longitude: -48.5480, nome: "Mercado Público", curiosidade: "O Mercado Público de Florianópolis é um ponto tradicional para comprar frutos do mar frescos e aproveitar a culinária local." },
+            { charada: "🌅 No alto da ilha, uma vista que revela toda a beleza de Floripa. Onde estou?", latitude: -27.5888, longitude: -48.5350, nome: "Mirante do Morro da Cruz", curiosidade: "O Mirante do Morro da Cruz oferece uma vista panorâmica de Florianópolis, abrangendo o centro da cidade, a baía sul e a baía norte." }
         ];
 
         let pistas = [];
@@ -270,6 +271,7 @@
         function exibirPista() {
             document.getElementById("pista").textContent = pistas[indiceAtual].charada;
             document.getElementById("mensagem").textContent = `Vá até ${pistas[indiceAtual].nome} e clique no botão abaixo!`;
+            document.getElementById("curiosidade").textContent = pistas[indiceAtual].curiosidade;
             mostrarMapa(pistas[indiceAtual].latitude, pistas[indiceAtual].longitude);
         }
 
