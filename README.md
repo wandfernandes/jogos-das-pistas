@@ -4,22 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Caça ao Tesouro Romântica - Florianópolis</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Arial', sans-serif;
             text-align: center;
             margin: 0;
             padding: 0;
-            background: url('https://drive.google.com/uc?export=view&id=1miMk1WTVpS_tOcfJNYrD-B_b2uxdAtc_') no-repeat center center fixed;
+            background: url('https://example.com/beach-path.jpg') no-repeat center center fixed;
             background-size: cover;
             color: #fff;
             overflow-x: hidden;
-        }
-        h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3em;
-            margin-top: 20px;
         }
         #inicio {
             margin-top: 50px;
@@ -58,23 +52,6 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        .avatar-selection {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 20px;
-        }
-        .avatar {
-            cursor: pointer;
-            width: 100px;
-            border: 2px solid transparent;
-            border-radius: 50%;
-            transition: transform 0.3s, border-color 0.3s;
-        }
-        .avatar:hover {
-            transform: scale(1.1);
-            border-color: #ff6f91;
-        }
         .correct {
             color: green;
             font-weight: bold;
@@ -93,31 +70,11 @@
             from { transform: scale(1); }
             to { transform: scale(0.9); }
         }
-        .heart {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background: url('https://example.com/heart.png') no-repeat center center;
-            background-size: cover;
-            animation: float 5s infinite;
-            opacity: 0.8;
-        }
-        @keyframes float {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-100px); }
-            100% { transform: translateY(0); }
-        }
     </style>
 </head>
 <body>
     <div id="inicio">
-        <h1>🌸 Caça ao Tesouro - Florianópolis 🌸</h1>
-        <p>Escolha seu avatar romântico:</p>
-        <div class="avatar-selection">
-            <img src="https://example.com/avatar1.png" class="avatar" alt="Avatar 1" onclick="selecionarAvatar('avatar1')">
-            <img src="https://example.com/avatar2.png" class="avatar" alt="Avatar 2" onclick="selecionarAvatar('avatar2')">
-            <img src="https://example.com/avatar3.png" class="avatar" alt="Avatar 3" onclick="selecionarAvatar('avatar3')">
-        </div>
+        <h1>🌸 Caça ao Tesouro Romântica - Florianópolis 🌸</h1>
         <p>Insira sua chave de acesso:</p>
         <input type="text" id="chave" placeholder="Digite sua chave">
         <button onclick="iniciarJogo()">Começar</button>
@@ -130,7 +87,6 @@
         <div id="mapa"></div>
     </div>
 
-    <!-- Adicionando sons -->
     <audio id="somCorreto" src="https://www.soundjay.com/button/beep-07.wav"></audio>
     <audio id="somIncorreto" src="https://www.soundjay.com/button/beep-10.wav"></audio>
     <audio id="musicaFundo" src="https://www.soundjay.com/nature/sounds/rain-01.mp3" loop></audio>
@@ -147,14 +103,6 @@
 
         let pistas = [];
         let indiceAtual = 0;
-        let avatarSelecionado = '';
-
-        function selecionarAvatar(avatar) {
-            avatarSelecionado = avatar;
-            const avatares = document.querySelectorAll('.avatar');
-            avatares.forEach(av => av.style.borderColor = 'transparent');
-            document.querySelector(`[alt="${avatar.split(' ').join('')}"]`).style.borderColor = '#ff6f91';
-        }
 
         function iniciarJogo() {
             let chave = document.getElementById("chave").value.trim();
@@ -169,7 +117,6 @@
             document.getElementById("pista-container").style.display = "block";
             mostrarPista();
             document.getElementById("musicaFundo").play();
-            criarCorações();
         }
 
         function embaralharPistas(chave) {
@@ -200,9 +147,10 @@
         }
 
         function verificarLocalizacao() {
-            // Coordenadas fixas para facilitar os testes
-            const latUsuario = -27.5969;  // Latitude da Lagoa da Conceição
-            const longUsuario = -48.4846; // Longitude da Lagoa da Conceição
+            // Simulando uma localização fixa (coordenadas da Lagoa da Conceição)
+            const latUsuario = -27.5969;
+            const longUsuario = -48.4846;
+
             const latPista = pistas[indiceAtual].latitude;
             const longPista = pistas[indiceAtual].longitude;
 
@@ -223,13 +171,13 @@
         }
 
         function calcularDistancia(lat1, lon1, lat2, lon2) {
-            const R = 6371; 
+            const R = 6371;
             const dLat = (lat2 - lat1) * Math.PI / 180;
             const dLon = (lon2 - lon1) * Math.PI / 180;
-            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
                       Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-                      Math.sin(dLon/2) * Math.sin(dLon/2);
-            return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+                      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
         }
 
         function desbloquearProximaPista() {
@@ -251,17 +199,6 @@
             } else {
                 document.getElementById("pista").textContent = "🎉 Parabéns! Você encontrou o tesouro romântico! 🎁";
                 document.getElementById("mensagem").textContent = "";
-            }
-        }
-
-        function criarCorações() {
-            const numCoracoes = 20;
-            for (let i = 0; i < numCoracoes; i++) {
-                const coracao = document.createElement('div');
-                coracao.className = 'heart';
-                coracao.style.left = `${Math.random() * 100}vw`;
-                coracao.style.animationDuration = `${Math.random() * 5 + 5}s`;
-                document.body.appendChild(coracao);
             }
         }
     </script>
