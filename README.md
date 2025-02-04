@@ -45,6 +45,9 @@
             font-weight: bold;
             color: #333333;
         }
+        #mapa {
+            margin-top: 20px;
+        }
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -60,6 +63,7 @@
         <input type="text" id="resposta" placeholder="Digite sua resposta">
         <button onclick="verificarResposta()">Enviar</button>
         <p id="mensagem"></p>
+        <div id="mapa"></div>
     </div>
     
     <button onclick="iniciarJogo()">Iniciar Jogo</button>
@@ -78,27 +82,27 @@
                 qrCode: "https://www.exemplo.com/qr1.png"
             },
             {
-                charada: "As paredes aqui guardam segredos de um tempo passado, mas ainda contam histórias do presente. Aqui viveu um homem cuja assinatura moldou a cidade. Onde estou?",
-                resposta: "museu pedro ludovico",
-                proximaPista: "Ótimo! Vá até o Museu Pedro Ludovico e encontre um QR Code próximo à entrada principal!",
+                charada: "Um espaço de lazer no coração da cidade, onde vacas pastavam antigamente. Agora, é um lugar para caminhar, correr e relaxar junto ao lago. Onde estou?",
+                resposta: "parque vaca brava",
+                proximaPista: "Muito bem! Vá até o Parque Vaca Brava e encontre um QR Code próximo ao lago!",
                 qrCode: "https://www.exemplo.com/qr2.png"
             },
             {
-                charada: "Em meio ao verde, onde a água descansa e os pássaros cantam, existe um lugar onde a natureza encontra a arte. Venha, respire fundo e encontre o caminho. Onde estou?",
-                resposta: "bosque dos buritis",
-                proximaPista: "Incrível! Agora siga até o Bosque dos Buritis e escaneie o QR Code próximo ao lago!",
+                charada: "Um mercado histórico onde se encontram sabores e aromas regionais. De frutas frescas a artesanatos, este lugar é um verdadeiro tesouro. Onde estou?",
+                resposta: "mercado central",
+                proximaPista: "Ótimo! Vá até o Mercado Central e procure um QR Code próximo à entrada principal!",
                 qrCode: "https://www.exemplo.com/qr3.png"
             },
             {
-                charada: "Linhas que desafiam a gravidade, curvas que contam histórias de um mestre do concreto. Aqui, a arquitetura dança com a cultura. Onde estou?",
-                resposta: "centro cultural oscar niemeyer",
-                proximaPista: "Você está indo muito bem! Vá até o Centro Cultural Oscar Niemeyer e encontre um QR Code próximo ao prédio principal.",
+                charada: "Um parque onde a natureza e os animais convivem em harmonia. Caminhe pelas trilhas e observe os saguis brincando nas árvores. Onde estou?",
+                resposta: "parque areião",
+                proximaPista: "Você acertou! Vá até o Parque Areião e encontre um QR Code próximo ao playground!",
                 qrCode: "https://www.exemplo.com/qr4.png"
             },
             {
-                charada: "Grandes espelhos d'água refletem o céu. As famílias vêm aqui para celebrar, os amantes para caminhar, e os sonhos para se realizar. Onde estou?",
-                resposta: "parque flamboyant",
-                proximaPista: "Última etapa! Vá até o Parque Flamboyant e procure um QR Code próximo ao lago!",
+                charada: "Um teatro que é um marco da arquitetura art déco na cidade. Aqui, a cultura se encontra com a história em cada apresentação. Onde estou?",
+                resposta: "teatro goiânia",
+                proximaPista: "Muito bom! Vá até o Teatro Goiânia e encontre um QR Code próximo à bilheteria!",
                 qrCode: "https://www.exemplo.com/qr5.png"
             }
         ];
@@ -115,6 +119,7 @@
             if (resposta === pistas[indiceAtual].resposta) {
                 document.getElementById("mensagem").textContent = pistas[indiceAtual].proximaPista;
                 document.getElementById("mensagem").innerHTML += `<br><img src="${pistas[indiceAtual].qrCode}" alt="QR Code" style="max-width: 200px;">`;
+                mostrarMapa(pistas[indiceAtual].proximaPista);
                 indiceAtual++;
                 if (indiceAtual < pistas.length) {
                     setTimeout(() => {
@@ -128,6 +133,12 @@
             } else {
                 document.getElementById("mensagem").textContent = "Resposta incorreta. Tente novamente!";
             }
+        }
+
+        function mostrarMapa(local) {
+            let mapa = document.getElementById("mapa");
+            mapa.innerHTML = `<iframe width="600" height="450" style="border:0" loading="lazy" allowfullscreen
+                src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${encodeURIComponent(local)}"></iframe>`;
         }
 
         // Leitor de QR Code
