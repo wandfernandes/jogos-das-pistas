@@ -1,4 +1,34 @@
-document.getElementById('user-nome').innerText = nome;
+const pistasOriginais = [
+    { charada: "🌆 Noite: Passeio leve na Beira-Mar Norte ou na Lagoa da Conceição. Onde estou?", latitude: -27.5969, longitude: -48.4846, nome: "Lagoa da Conceição", curiosidade: "A Lagoa da Conceição é um dos cartões-postais mais conhecidos de Florianópolis, famosa por suas águas calmas e esportes aquáticos.", foto: "https://example.com/lagoa.jpg" },
+    { charada: "🏖️ Manhã: Praia de Jurerê Internacional e Jurerê Tradicional. Onde estou?", latitude: -27.4368, longitude: -48.4916, nome: "Praia de Jurerê", curiosidade: "Jurerê Internacional é conhecida por suas festas luxuosas, casas noturnas e um público seleto. Um lugar onde luxo e natureza se encontram.", foto: "https://example.com/jurere.jpg" },
+    { charada: "🏰 Tarde: Praia do Forte e visita à Fortaleza de São José da Ponta Grossa. Onde estou?", latitude: -27.4284, longitude: -48.5005, nome: "Praia do Forte", curiosidade: "A Fortaleza de São José da Ponta Grossa é uma fortificação histórica construída no século XVIII para proteger a ilha de invasões.", foto: "https://example.com/forte.jpg" },
+    { charada: "🍽️ Noite: Jantar em Santo Antônio de Lisboa. Onde estou?", latitude: -27.5063, longitude: -48.5496, nome: "Santo Antônio de Lisboa", curiosidade: "Santo Antônio de Lisboa é um bairro histórico com forte influência da cultura açoriana, famoso por seus restaurantes de frutos do mar.", foto: "https://example.com/santo_antonio.jpg" },
+    { charada: "🏄‍♂️ Manhã: Praia da Joaquina e Dunas. Onde estou?", latitude: -27.6206, longitude: -48.4354, nome: "Praia da Joaquina", curiosidade: "As Dunas da Joaquina são perfeitas para a prática de sandboard, um esporte que consiste em descer as dunas em uma prancha.", foto: "https://example.com/joaquina.jpg" },
+    { charada: "🌊 Tarde: Praia Mole e trilha para Galheta. Onde estou?", latitude: -27.6048, longitude: -48.4223, nome: "Praia Mole", curiosidade: "A Praia Mole é famosa por suas ondas fortes, sendo um ponto de encontro para surfistas e amantes da natureza.", foto: "https://example.com/mole.jpg" },
+    { charada: "🛍️ Noite: Centro Histórico e Mercado Público. Onde estou?", latitude: -27.5951, longitude: -48.5480, nome: "Mercado Público", curiosidade: "O Mercado Público de Florianópolis é um ponto tradicional para comprar frutos do mar frescos e aproveitar a culinária local.", foto: "https://example.com/mercado.jpg" },
+    { charada: "🎡 Passeio a Balneário Camboriú: Parque Unipraias, Praia Central e Roda Gigante FG Big Wheel. Onde estou?", latitude: -26.9911, longitude: -48.6337, nome: "Balneário Camboriú", curiosidade: "Balneário Camboriú é conhecida como a 'Dubai Brasileira' devido aos seus arranha-céus e atrações turísticas modernas.", foto: "https://example.com/camboriu.jpg" },
+    { charada: "🏝️ Manhã: Ilha do Campeche. Onde estou?", latitude: -27.6878, longitude: -48.4827, nome: "Ilha do Campeche", curiosidade: "A Ilha do Campeche é conhecida por suas águas cristalinas e trilhas arqueológicas, sendo um verdadeiro paraíso natural.", foto: "https://example.com/campeche.jpg" },
+    { charada: "🏖️ Tarde: Praia da Armação e Matadeiro. Onde estou?", latitude: -27.7252, longitude: -48.5007, nome: "Praia da Armação", curiosidade: "A Praia da Armação é conhecida por sua beleza natural e tranquilidade, sendo um ótimo local para relaxar e aproveitar a natureza.", foto: "https://example.com/armacao.jpg" },
+    { charada: "🌅 Noite: Relaxamento ou passeio livre. Onde estou?", latitude: -27.5969, longitude: -48.4846, nome: "Lagoa da Conceição", curiosidade: "A Lagoa da Conceição é um dos cartões-postais mais conhecidos de Florianópolis, famosa por suas águas calmas e esportes aquáticos.", foto: "https://example.com/lagoa.jpg" },
+    { charada: "🏞️ Manhã: Trilha para Lagoinha do Leste. Onde estou?", latitude: -27.7516, longitude: -48.4877, nome: "Lagoinha do Leste", curiosidade: "A Lagoinha do Leste é uma das praias mais selvagens e bonitas de Florianópolis, acessível apenas por trilhas ou barco.", foto: "https://example.com/lagoinha.jpg" },
+    { charada: "🏖️ Tarde: Praia da Solidão e Saquinho. Onde estou?", latitude: -27.7615, longitude: -48.5106, nome: "Praia da Solidão", curiosidade: "A Praia da Solidão é um refúgio tranquilo e paradisíaco, ideal para quem busca sossego e contato com a natureza.", foto: "https://example.com/solidao.jpg" },
+    { charada: "🌆 Noite: Passeio de despedida na Lagoa da Conceição. Onde estou?", latitude: -27.5969, longitude: -48.4846, nome: "Lagoa da Conceição", curiosidade: "A Lagoa da Conceição é um dos cartões-postais mais conhecidos de Florianópolis, famosa por suas águas calmas e esportes aquáticos.", foto: "https://example.com/lagoa.jpg" },
+    { charada: "🛍️ Manhã: Compras ou passeio leve em praias próximas. Onde estou?", latitude: -27.5951, longitude: -48.5480, nome: "Mercado Público", curiosidade: "O Mercado Público de Florianópolis é um ponto tradicional para comprar frutos do mar frescos e aproveitar a culinária local.", foto: "https://example.com/mercado.jpg" },
+    { charada: "✈️ Noite: Saída para Goiânia. Onde estou?", latitude: -27.6706, longitude: -48.5525, nome: "Aeroporto Internacional Hercílio Luz", curiosidade: "O Aeroporto Internacional Hercílio Luz é o principal aeroporto de Florianópolis, conectando a cidade a diversos destinos nacionais e internacionais.", foto: "https://example.com/aeroporto.jpg" }
+];
+
+let pistas = [];
+let indiceAtual = 0;
+let avatarSelecionado = '';
+
+document.getElementById('identification-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const nome = document.getElementById('nome').value;
+    const cidade = document.getElementById('cidade').value;
+    const dataJogo = document.getElementById('data-jogo').value;
+
+   document.getElementById('user-nome').innerText = nome;
 document.getElementById('user-cidade').innerText = cidade;
 document.getElementById('user-data-jogo').innerText = dataJogo;
 
