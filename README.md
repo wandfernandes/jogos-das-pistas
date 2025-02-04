@@ -10,7 +10,7 @@
             text-align: center;
             margin: 0;
             padding: 0;
-            background: url('https://drive.google.com/uc?id=1ucn22uaFBDVc2sIo-HpdSvqhU_lK0oT-') no-repeat center center fixed;
+            background: url('https://drive.google.com/uc?export=view&id=1ucn22uaFBDVc2sIo-HpdSvqhU_lK0oT-') no-repeat center center fixed;
             background-size: cover;
             color: #5d5151;
             overflow: hidden;
@@ -63,7 +63,7 @@
             position: absolute;
             width: 50px;
             height: 50px;
-            background: url('https://drive.google.com/uc?id=17jgRNtqBFcVhr4b-S4-Ko6pYagFMdqSD') no-repeat center center;
+            background: url('https://drive.google.com/uc?export=view&id=17jgRNtqBFcVhr4b-S4-Ko6pYagFMdqSD') no-repeat center center;
             background-size: cover;
             animation: float 5s infinite;
             opacity: 0.8;
@@ -76,7 +76,7 @@
     </style>
 </head>
 <body>
-    <img id="brasao" src="https://drive.google.com/uc?id=1JeGOidonTIDj0Z0vuEC-jjRM6CAoBpBX" alt="Brasão UniGOIAS">
+    <img id="brasao" src="https://drive.google.com/uc?export=view&id=1JeGOidonTIDj0Z0vuEC-jjRM6CAoBpBX" alt="Brasão UniGOIAS">
     <h1>Bem-vinda à Caça ao Tesouro Romântica!</h1>
     <p>Resolva as charadas para encontrar o presente final. Escaneie o QR Code correto para avançar para a próxima pista. <span class="heart">&#x2764;</span></p>
     
