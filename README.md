@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caça ao Tesouro Romântica</title>
+    <title>Caça ao Tesouro </title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -80,7 +80,7 @@
         <h1>Bem-vindo(a), <span id="user-nome"></span>!</h1>
         <p>Origem: <span id="user-cidade"></span></p>
         <p>Data do Jogo: <span id="user-data"></span></p>
-        <img src= (https://drive.google.com/file/d/1yG53CU4XX6-Aap6FJBHl_PLKvccgXg0j/view?usp=drive_link) alt="Imagem Enigmática">
+        <img src= https://drive.google.com/file/d/1yG53CU4XX6-Aap6FJBHl_PLKvccgXg0j/view?usp=drive_link alt="Imagem Enigmática">
         <button onclick="mostrarPista()">Começar o Jogo</button>
     </div>
     <div id="pista-container">
