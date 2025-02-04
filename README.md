@@ -3,42 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caça ao Tesouro</title>
+    <title>Caça ao Tesouro Romântica</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Courier New', cursive;
             text-align: center;
             margin: 50px;
-            background-color: #f0f0f0;
+            background: linear-gradient(to right top, #ff9a9e, #fad0c4);
+            color: #5d5151;
         }
         #pista-container {
             display: none;
             margin-top: 20px;
             padding: 20px;
             background-color: #ffffff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
             animation: fadeIn 1s;
         }
         input {
-            padding: 10px;
+            padding: 15px;
             width: 300px;
             margin-top: 10px;
-            border: 1px solid #cccccc;
-            border-radius: 4px;
+            border: 2px solid #fad0c4;
+            border-radius: 8px;
+            font-size: 16px;
         }
         button {
-            padding: 10px 15px;
+            padding: 15px 20px;
             cursor: pointer;
             margin-top: 10px;
             border: none;
-            background-color: #5cb85c;
+            background-color: #ff6f91;
             color: #ffffff;
-            border-radius: 4px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 18px;
+            transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #4cae4c;
+            background-color: #ff4e67;
         }
         #mensagem {
             margin-top: 20px;
@@ -52,11 +55,20 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .heart {
+            color: #ff6f91;
+            animation: pulse 1.5s infinite;
+        }
     </style>
 </head>
 <body>
-    <h1>Bem-vinda à Caça ao Tesouro!</h1>
-    <p>Resolva as charadas para encontrar o presente final. Insira a resposta correta para receber a localização do QR Code com a próxima pista.</p>
+    <h1>Bem-vinda à Caça ao Tesouro Romântica!</h1>
+    <p>Resolva as charadas para encontrar o presente final. Insira a resposta correta para receber a localização do QR Code com a próxima pista. <span class="heart">&#x2764;</span></p>
     
     <div id="pista-container">
         <h2 id="pista"></h2>
