@@ -78,11 +78,10 @@
 <body>
     <img id="brasao" src="https://drive.google.com/uc?id=1JeGOidonTIDj0Z0vuEC-jjRM6CAoBpBX" alt="Brasão UniGOIAS">
     <h1>Bem-vinda à Caça ao Tesouro Romântica!</h1>
-    <p>Resolva as charadas para encontrar o presente final. Escolha a resposta correta para receber a localização do QR Code com a próxima pista. <span class="heart">&#x2764;</span></p>
+    <p>Resolva as charadas para encontrar o presente final. Escaneie o QR Code correto para avançar para a próxima pista. <span class="heart">&#x2764;</span></p>
     
     <div id="pista-container">
         <h2 id="pista"></h2>
-        <div id="opcoes"></div>
         <p id="mensagem"></p>
         <div id="mapa"></div>
     </div>
@@ -98,36 +97,31 @@
         const pistas = [
             {
                 charada: "Ele foi o homem que sonhou e construiu. No coração da cidade, sua presença ainda se faz sentir. Seu olhar repousa sobre aqueles que passam. Onde ele está?",
-                opcoes: ["Praça Cívica", "Parque Flamboyant", "Bosque dos Buritis"],
-                resposta: "Praça Cívica",
+                resposta: "praça cívica",
                 proximaPista: "Parabéns! Vá até a Praça Cívica e procure um QR Code próximo à estátua de Pedro Ludovico para a próxima charada!",
                 qrCode: "https://www.exemplo.com/qr1.png"
             },
             {
                 charada: "Um espaço de lazer no coração da cidade, onde vacas pastavam antigamente. Agora, é um lugar para caminhar, correr e relaxar junto ao lago. Onde estou?",
-                opcoes: ["Parque Areião", "Parque Vaca Brava", "Parque Flamboyant"],
-                resposta: "Parque Vaca Brava",
+                resposta: "parque vaca brava",
                 proximaPista: "Muito bem! Vá até o Parque Vaca Brava e encontre um QR Code próximo ao lago!",
                 qrCode: "https://www.exemplo.com/qr2.png"
             },
             {
                 charada: "Um mercado histórico onde se encontram sabores e aromas regionais. De frutas frescas a artesanatos, este lugar é um verdadeiro tesouro. Onde estou?",
-                opcoes: ["Mercado Municipal", "Mercado Central", "Mercado da 74"],
-                resposta: "Mercado Central",
+                resposta: "mercado central",
                 proximaPista: "Ótimo! Vá até o Mercado Central e procure um QR Code próximo à entrada principal!",
                 qrCode: "https://www.exemplo.com/qr3.png"
             },
             {
                 charada: "Um parque onde a natureza e os animais convivem em harmonia. Caminhe pelas trilhas e observe os saguis brincando nas árvores. Onde estou?",
-                opcoes: ["Parque Areião", "Parque Flamboyant", "Bosque dos Buritis"],
-                resposta: "Parque Areião",
+                resposta: "parque areião",
                 proximaPista: "Você acertou! Vá até o Parque Areião e encontre um QR Code próximo ao playground!",
                 qrCode: "https://www.exemplo.com/qr4.png"
             },
             {
                 charada: "Um teatro que é um marco da arquitetura art déco na cidade. Aqui, a cultura se encontra com a história em cada apresentação. Onde estou?",
-                opcoes: ["Teatro Goiânia", "Teatro Basileu França", "Centro Cultural UFG"],
-                resposta: "Teatro Goiânia",
+                resposta: "teatro goiânia",
                 proximaPista: "Muito bom! Vá até o Teatro Goiânia e encontre um QR Code próximo à bilheteria!",
                 qrCode: "https://www.exemplo.com/qr5.png"
             }
@@ -144,18 +138,10 @@
         function mostrarCharada(indice) {
             const pista = pistas[indice];
             document.getElementById("pista").textContent = pista.charada;
-            const opcoesContainer = document.getElementById("opcoes");
-            opcoesContainer.innerHTML = "";
-            pista.opcoes.forEach((opcao, index) => {
-                const botao = document.createElement("button");
-                botao.textContent = opcao;
-                botao.onclick = () => verificarResposta(opcao);
-                opcoesContainer.appendChild(botao);
-            });
         }
         
         function verificarResposta(resposta) {
-            if (resposta === pistas[indiceAtual].resposta) {
+            if (resposta.toLowerCase().trim() === pistas[indiceAtual].resposta.toLowerCase().trim()) {
                 document.getElementById("mensagem").textContent = pistas[indiceAtual].proximaPista;
                 document.getElementById("mensagem").innerHTML += `<br><img src="${pistas[indiceAtual].qrCode}" alt="QR Code" style="max-width: 200px;">`;
                 mostrarMapa(pistas[indiceAtual].proximaPista);
@@ -190,9 +176,10 @@
             }
         }
 
-        // Leitor de QR Code
         function onScanSuccess(decodedText, decodedResult) {
+            // Handle the result here
             document.getElementById('qr-reader-results').innerHTML = `Código QR Lido: ${decodedText}`;
+            verificarResposta(decodedText);
         }
 
         var html5QrcodeScanner = new Html5QrcodeScanner(
