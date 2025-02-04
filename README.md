@@ -12,7 +12,7 @@
             padding: 0;
             background: url('https://drive.google.com/uc?id=1ucn22uaFBDVc2sIo-HpdSvqhU_lK0oT-') no-repeat center center fixed;
             background-size: cover;
-            color: #5d5151;
+            color: #fff;
             overflow: hidden;
         }
         #brasao {
@@ -29,6 +29,7 @@
             width: 80%;
             max-width: 600px;
             animation: fadeIn 1s;
+            color: #333;
         }
         button {
             padding: 15px 20px;
@@ -39,13 +40,14 @@
             color: #ffffff;
             border-radius: 8px;
             font-size: 18px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.3s;
             display: block;
             margin: 10px auto;
             width: 80%;
         }
         button:hover {
             background-color: #ff4e67;
+            transform: scale(1.1);
         }
         #mensagem {
             margin-top: 20px;
@@ -92,6 +94,13 @@
     <!-- Adicionando o leitor de QR Code -->
     <div id="qr-reader" style="width: 500px; margin: 20px auto;"></div>
     <p id="qr-reader-results"></p>
+
+    <!-- Adicionando sons -->
+    <audio id="somCorreto" src="https://www.soundjay.com/button/beep-07.wav"></audio>
+    <audio id="somIncorreto" src="https://www.soundjay.com/button/beep-10.wav"></audio>
+
+    <!-- Adicionando o assistente virtual -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
     
     <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
     <script>
@@ -155,13 +164,12 @@
         }
         
         function verificarResposta(resposta) {
+            const somCorreto = document.getElementById("somCorreto");
+            const somIncorreto = document.getElementById("somIncorreto");
             if (resposta === pistas[indiceAtual].resposta) {
+                somCorreto.play();
                 document.getElementById("mensagem").textContent = pistas[indiceAtual].proximaPista;
-                const qrCodeImage = document.createElement('img');
-                qrCodeImage.src = pistas[indiceAtual].qrCode;
-                qrCodeImage.alt = "QR Code";
-                qrCodeImage.style.maxWidth = "200px";
-                document.getElementById("mensagem").appendChild(qrCodeImage);
+                document.getElementById("mensagem").innerHTML += `<br><img src="${pistas[indiceAtual].qrCode}" alt="QR Code" style="max-width: 200px;">`;
                 mostrarMapa(pistas[indiceAtual].proximaPista);
                 indiceAtual++;
                 if (indiceAtual < pistas.length) {
@@ -173,6 +181,7 @@
                     document.getElementById("mensagem").textContent = "Parabéns! Você completou a caça ao tesouro e encontrou seu presente!";
                 }
             } else {
+                somIncorreto.play();
                 document.getElementById("mensagem").textContent = "Resposta incorreta. Tente novamente!";
             }
         }
@@ -197,11 +206,22 @@
         // Leitor de QR Code
         function onScanSuccess(decodedText, decodedResult) {
             document.getElementById('qr-reader-results').innerHTML = `Código QR Lido: ${decodedText}`;
+            verificarResposta(decodedText);
         }
 
         var html5QrcodeScanner = new Html5QrcodeScanner(
             "qr-reader", { fps: 10, qrbox: 250 });
         html5QrcodeScanner.render(onScanSuccess);
+
+        // Assistente virtual
+        if (annyang) {
+            const comandos = {
+                'iniciar jogo': iniciarJogo,
+                'responder *resposta': verificarResposta,
+            };
+            annyang.addCommands(comandos);
+            annyang.start();
+        }
     </script>
 </body>
 </html>
