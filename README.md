@@ -79,20 +79,62 @@
             border-radius: 8px;
             border: none;
         }
+        .form-container, .inicio-container {
+            display: none;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 600px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+        .form-container.active, .inicio-container.active, .pista-container.active {
+            display: block;
+        }
+        .avatar-selection img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .avatar-selection img:hover {
+            transform: scale(1.1);
+        }
+        .selected-avatar {
+            border: 3px solid #ff4081;
+        }
     </style>
 </head>
 <body>
 
-    <div class="avatar"></div>
-
-    <div id="inicio">
-        <h1>🌸 Caça ao Tesouro Romântica 🌸</h1>
-        <p>Descubra as belezas de Florianópolis e desvende os mistérios do amor!</p>
-        <input type="text" id="chave" placeholder="Digite sua chave secreta">
-        <button onclick="iniciarJogo()">Iniciar Jogo</button>
+    <div class="form-container active" id="form-container">
+        <h1>🌸 Identifique-se 🌸</h1>
+        <form id="identification-form">
+            <input type="text" id="nome" placeholder="Nome" required>
+            <input type="text" id="cidade" placeholder="Cidade de Origem" required>
+            <input type="date" id="data-jogo" placeholder="Data do Jogo" required>
+            <div class="avatar-selection">
+                <img src="https://example.com/avatar1.jpg" alt="Avatar 1" onclick="selecionarAvatar(this)">
+                <img src="https://example.com/avatar2.jpg" alt="Avatar 2" onclick="selecionarAvatar(this)">
+                <img src="https://example.com/avatar3.jpg" alt="Avatar 3" onclick="selecionarAvatar(this)">
+            </div>
+            <button type="submit">Iniciar</button>
+        </form>
     </div>
 
-    <div class="pista-container" id="pista-container" style="display:none;">
+    <div class="inicio-container" id="inicio-container">
+        <h1>Bem-vindo(a), <span id="user-nome"></span>!</h1>
+        <p>Origem: <span id="user-cidade"></span></p>
+        <p>Data do Jogo: <span id="user-data"></span></p>
+        <img id="user-avatar" src="" alt="Avatar Selecionado">
+        <button onclick="mostrarPista()">Começar o Jogo</button>
+    </div>
+
+    <div class="pista-container" id="pista-container">
         <h2 id="pista">🌊 Local da Primeira Pista</h2>
         <p id="mensagem">Descubra a pista nas belezas naturais de Florianópolis!</p>
         <button onclick="desbloquearProximaPista()">Próxima Pista</button>
@@ -115,20 +157,37 @@
 
         let pistas = [];
         let indiceAtual = 0;
+        let avatarSelecionado = '';
 
-        function iniciarJogo() {
-            let chave = document.getElementById("chave").value.trim();
-            if (chave === "") {
-                alert("Digite uma chave válida!");
-                return;
-            }
+        document.getElementById('identification-form').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-            pistas = embaralharPistas(chave);
+            const nome = document.getElementById('nome').value;
+            const cidade = document.getElementById('cidade').value;
+            const dataJogo = document.getElementById('data-jogo').value;
 
-            document.getElementById("inicio").style.display = "none";
-            document.getElementById("pista-container").style.display = "block";
-            mostrarPista();
+            document.getElementById('user-nome').innerText = nome;
+            document.getElementById('user-cidade').innerText = cidade;
+            document.getElementById('user-data').innerText = new Date(dataJogo).toLocaleDateString('pt-BR');
+
+            document.getElementById('form-container').classList.remove('active');
+            document.getElementById('inicio-container').classList.add('active');
+        });
+
+        function selecionarAvatar(img) {
+            avatarSelecionado = img.src;
+            document.querySelectorAll('.avatar-selection img').forEach(el => el.classList.remove('selected-avatar'));
+            img.classList.add('selected-avatar');
+            document.getElementById('user-avatar').src = avatarSelecionado;
+        }
+
+        function mostrarPista() {
+            pistas = embaralharPistas("chave-fixa-teste");
+
+            document.getElementById('inicio-container').classList.remove('active');
+            document.getElementById('pista-container').classList.add('active');
             document.getElementById("musicaFundo").play();
+            exibirPista();
         }
 
         function embaralharPistas(chave) {
@@ -152,7 +211,7 @@
             return hash;
         }
 
-        function mostrarPista() {
+        function exibirPista() {
             document.getElementById("pista").textContent = pistas[indiceAtual].charada;
             document.getElementById("mensagem").textContent = `Vá até ${pistas[indiceAtual].nome} e clique no botão abaixo!`;
             mostrarMapa(pistas[indiceAtual].latitude, pistas[indiceAtual].longitude);
@@ -163,7 +222,6 @@
                 src="https://www.google.com/maps?q=${lat},${long}&output=embed"></iframe>`;
         }
 
-        // Função de simulação de verificação da localização
         function desbloquearProximaPista() {
             const somCorreto = document.getElementById("somCorreto");
             somCorreto.play();
@@ -171,7 +229,7 @@
             indiceAtual++;
             if (indiceAtual < pistas.length) {
                 setTimeout(() => {
-                    mostrarPista();
+                    exibirPista();
                     document.getElementById("mensagem").textContent = "";
                 }, 3000);
             } else {
