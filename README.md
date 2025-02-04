@@ -95,7 +95,7 @@
     <div class="pista-container" id="pista-container" style="display:none;">
         <h2 id="pista">🌊 Local da Primeira Pista</h2>
         <p id="mensagem">Descubra a pista nas belezas naturais de Florianópolis!</p>
-        <button onclick="verificarLocalizacao()">Verificar Localização</button>
+        <button onclick="desbloquearProximaPista()">Próxima Pista</button>
         <div id="mapa"></div>
     </div>
 
@@ -158,48 +158,12 @@
             mostrarMapa(pistas[indiceAtual].latitude, pistas[indiceAtual].longitude);
         }
 
-        function verificarLocalizacao() {
-            // Coordenadas fixas para facilitar os testes
-            const coordenadasSimuladas = [
-                { latitude: -27.5969, longitude: -48.4846 },  // Lagoa da Conceição
-                { latitude: -27.5973, longitude: -48.5515 },  // Ponte Hercílio Luz
-                { latitude: -27.6206, longitude: -48.4354 },  // Dunas da Joaquina
-                { latitude: -27.4368, longitude: -48.4916 },  // Praia de Jurerê
-                { latitude: -27.5951, longitude: -48.5480 },  // Mercado Público
-                { latitude: -27.5888, longitude: -48.5350 }   // Mirante do Morro da Cruz
-            ];
-
-            const latUsuario = coordenadasSimuladas[indiceAtual].latitude;
-            const longUsuario = coordenadasSimuladas[indiceAtual].longitude;
-            const latPista = pistas[indiceAtual].latitude;
-            const longPista = pistas[indiceAtual].longitude;
-
-            const distancia = calcularDistancia(latUsuario, longUsuario, latPista, longPista);
-
-            if (distancia < 0.2) {
-                desbloquearProximaPista();
-            } else {
-                document.getElementById("mensagem").textContent = "📍 Você ainda não chegou ao local certo! Continue procurando!";
-                const somIncorreto = document.getElementById("somIncorreto");
-                somIncorreto.play();
-            }
-        }
-
         function mostrarMapa(lat, long) {
             document.getElementById("mapa").innerHTML = `<iframe width="100%" height="300" frameborder="0"
                 src="https://www.google.com/maps?q=${lat},${long}&output=embed"></iframe>`;
         }
 
-        function calcularDistancia(lat1, lon1, lat2, lon2) {
-            const R = 6371; 
-            const dLat = (lat2 - lat1) * Math.PI / 180;
-            const dLon = (lon2 - lon1) * Math.PI / 180;
-            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-                      Math.sin(dLon/2) * Math.sin(dLon/2);
-            return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
-        }
-
+        // Função de simulação de verificação da localização
         function desbloquearProximaPista() {
             const somCorreto = document.getElementById("somCorreto");
             somCorreto.play();
