@@ -81,7 +81,7 @@
     </style>
 </head>
 <body>
-    <img id="brasao" src=(https://drive.google.com/file/d/1b7CW_jplVeGatZv090UYLowONsBl4HhM/view?usp=drive_link) alt="Brasão UniGOIAS">
+    <img id="brasao" src=(https://drive.google.com/file/d/1JeGOidonTIDj0Z0vuEC-jjRM6CAoBpBX/view?usp=drive_link) alt="Brasão UniGOIAS">
     <h1>Bem-vinda à Caça ao Tesouro Romântica!</h1>
     <p>Resolva as charadas para encontrar o presente final. Insira a resposta correta para receber a localização do QR Code com a próxima pista. <span class="heart">&#x2764;</span></p>
     
