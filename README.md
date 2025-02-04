@@ -75,7 +75,7 @@
         <h1>Bem-vindo(a), <span id="user-nome"></span>!</h1>
         <p>Origem: <span id="user-cidade"></span></p>
         <p>Data do Jogo: <span id="user-data"></span></p>
-        <img src="https://example.com/enigmatic-image.jpg" alt="Imagem Enigmática">
+        <img src=(https://drive.google.com/file/d/1yG53CU4XX6-Aap6FJBHl_PLKvccgXg0j/view?usp=drive_link) alt="Imagem Enigmática">
         <button onclick="iniciarJogo()">Começar o Jogo</button>
     </div>
 
