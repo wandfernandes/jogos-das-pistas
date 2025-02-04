@@ -8,22 +8,31 @@
         body {
             font-family: 'Courier New', cursive;
             text-align: center;
-            margin: 50px;
-            background: linear-gradient(to right top, #ff9a9e, #fad0c4);
+            margin: 0;
+            padding: 0;
+            background: url('URL_DA_IMAGEM_DE_GOIANIA') no-repeat center center fixed;
+            background-size: cover;
             color: #5d5151;
+            overflow: hidden;
+        }
+        #brasao {
+            width: 100px;
+            margin: 20px auto;
         }
         #pista-container {
             display: none;
-            margin-top: 20px;
+            margin: 20px auto;
             padding: 20px;
-            background-color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.9);
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             border-radius: 15px;
+            width: 80%;
+            max-width: 600px;
             animation: fadeIn 1s;
         }
         input {
             padding: 15px;
-            width: 300px;
+            width: 80%;
             margin-top: 10px;
             border: 2px solid #fad0c4;
             border-radius: 8px;
@@ -55,18 +64,24 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
         .heart {
-            color: #ff6f91;
-            animation: pulse 1.5s infinite;
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: url('URL_DA_IMAGEM_DO_CORACAO') no-repeat center center;
+            background-size: cover;
+            animation: float 5s infinite;
+            opacity: 0.8;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-100px); }
+            100% { transform: translateY(0); }
         }
     </style>
 </head>
 <body>
+    <img id="brasao" src="URL_DO_BRASAO_UNIGOIAS" alt="Brasão UniGOIAS">
     <h1>Bem-vinda à Caça ao Tesouro Romântica!</h1>
     <p>Resolva as charadas para encontrar o presente final. Insira a resposta correta para receber a localização do QR Code com a próxima pista. <span class="heart">&#x2764;</span></p>
     
@@ -124,6 +139,7 @@
         function iniciarJogo() {
             document.getElementById("pista-container").style.display = "block";
             document.getElementById("pista").textContent = pistas[indiceAtual].charada;
+            criarCorações();
         }
         
         function verificarResposta() {
@@ -151,6 +167,17 @@
             let mapa = document.getElementById("mapa");
             mapa.innerHTML = `<iframe width="600" height="450" style="border:0" loading="lazy" allowfullscreen
                 src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${encodeURIComponent(local)}"></iframe>`;
+        }
+
+        function criarCorações() {
+            const numCorações = 20;
+            for (let i = 0; i < numCorações; i++) {
+                const coração = document.createElement('div');
+                coração.className = 'heart';
+                coração.style.left = `${Math.random() * 100}vw`;
+                coração.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                document.body.appendChild(coração);
+            }
         }
 
         // Leitor de QR Code
