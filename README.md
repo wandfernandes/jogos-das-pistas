@@ -44,7 +44,7 @@
             border-radius: 15px;
             box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
         }
-        .pista-container {
+        .pista-container, .roleta-container {
             background: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 15px;
@@ -90,7 +90,7 @@
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             animation: fadeIn 1s ease-in-out;
         }
-        .form-container.active, .inicio-container.active, .pista-container.active {
+        .form-container.active, .inicio-container.active, .pista-container.active, .roleta-container.active {
             display: block;
         }
         .avatar-selection img {
@@ -107,9 +107,51 @@
         .selected-avatar {
             border: 3px solid #ff4081;
         }
+        /* Estilos da roleta */
+        .roleta {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 10px solid #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            position: relative;
+            margin: 20px auto;
+        }
+        .roleta-segmento {
+            width: 50%;
+            height: 50%;
+            background: conic-gradient(#ff4081 0% 25%, #e91e63 25% 50%, #6200ea 50% 75%, #3f51b5 75% 100%);
+            position: absolute;
+            top: 0;
+            left: 0;
+            clip-path: polygon(0 0, 100% 0, 50% 50%);
+            transform-origin: 100% 100%;
+        }
+        .roleta-segmento:nth-child(2) {
+            transform: rotate(90deg);
+        }
+        .roleta-segmento:nth-child(3) {
+            transform: rotate(180deg);
+        }
+        .roleta-segmento:nth-child(4) {
+            transform: rotate(270deg);
+        }
+        .roleta-agulha {
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 40px solid #fff;
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
     </style>
 </head>
 <body>
+
+    <div class="avatar"></div>
 
     <div class="form-container active" id="form-container">
         <h1>🌸 Identifique-se 🌸</h1>
@@ -139,6 +181,20 @@
         <p id="mensagem">Descubra a pista nas belezas naturais de Florianópolis!</p>
         <button onclick="desbloquearProximaPista()">Próxima Pista</button>
         <div id="mapa"></div>
+    </div>
+
+    <div class="roleta-container" id="roleta-container" style="display:none;">
+        <h2>🎉 Parabéns! 🎉</h2>
+        <p>Gire a roleta para ganhar um prêmio!</p>
+        <div class="roleta">
+            <div class="roleta-segmento"></div>
+            <div class="roleta-segmento"></div>
+            <div class="roleta-segmento"></div>
+            <div class="roleta-segmento"></div>
+            <div class="roleta-agulha"></div>
+        </div>
+        <button onclick="girarRoleta()">Girar Roleta</button>
+        <p id="resultado-roleta"></p>
     </div>
 
     <audio id="somCorreto" src="https://www.soundjay.com/button/beep-07.wav"></audio>
@@ -235,7 +291,28 @@
             } else {
                 document.getElementById("pista").textContent = "🎉 Parabéns! Você encontrou o tesouro romântico! 🎁";
                 document.getElementById("mensagem").textContent = "";
+                document.getElementById('pista-container').classList.remove('active');
+                document.getElementById('roleta-container').classList.add('active');
             }
+        }
+
+        function girarRoleta() {
+            const roleta = document.querySelector('.roleta');
+            const deg = Math.floor(1000 + Math.random() * 1000);
+            roleta.style.transition = 'all 5s ease-out';
+            roleta.style.transform = `rotate(${deg}deg)`;
+            roleta.addEventListener('transitionend', () => {
+                const actualDeg = deg % 360;
+                const resultado = obterResultadoRoleta(actualDeg);
+                document.getElementById('resultado-roleta').textContent = resultado;
+            });
+        }
+
+        function obterResultadoRoleta(angulo) {
+            if (angulo >= 0 && angulo < 90) return "Você ganhou um jantar romântico!";
+            if (angulo >= 90 && angulo < 180) return "Você ganhou um passeio de barco!";
+            if (angulo >= 180 && angulo < 270) return "Você ganhou um buquê de flores!";
+            return "Você ganhou uma caixa de chocolates!";
         }
     </script>
 </body>
