@@ -88,59 +88,33 @@
     </div>
     
     <button onclick="iniciarJogo()">Iniciar Jogo</button>
+
+    <!-- Leitor de QR Code -->
     <div id="qr-reader" style="width: 500px; margin: 20px auto;"></div>
     <p id="qr-reader-results"></p>
     
     <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
     <script>
-        let pistas = [
-            {
-                charada: "No coração da cidade, um pioneiro repousa. Onde estou?",
-                resposta: "Praça Cívica",
-                qrCode: "https://www.exemplo.com/qr1.png"
-            },
-            {
-                charada: "Onde vacas pastavam, hoje há um belo lago. Onde estou?",
-                resposta: "Parque Vaca Brava",
-                qrCode: "https://www.exemplo.com/qr2.png"
-            }
-        ];
-        
-        let indiceAtual = 0;
-        
         function iniciarJogo() {
             document.getElementById("pista-container").style.display = "block";
-            mostrarCharada(indiceAtual);
+            criarCorações();
         }
-        
-        function mostrarCharada(indice) {
-            document.getElementById("pista").textContent = pistas[indice].charada;
-            document.getElementById("opcoes").innerHTML = `<button onclick="verificarResposta('${pistas[indice].resposta}')">${pistas[indice].resposta}</button>`;
-        }
-        
-        function verificarResposta(resposta) {
-            if (resposta === pistas[indiceAtual].resposta) {
-                document.getElementById("mensagem").innerHTML = `Parabéns! Encontre o QR Code: <br><img src="${pistas[indiceAtual].qrCode}" style="max-width: 200px;">`;
-                indiceAtual++;
-                if (indiceAtual < pistas.length) {
-                    setTimeout(() => {
-                        mostrarCharada(indiceAtual);
-                        document.getElementById("mensagem").innerHTML = "";
-                    }, 3000);
-                } else {
-                    document.getElementById("mensagem").textContent = "Parabéns! Você encontrou o tesouro!";
-                }
-            } else {
-                document.getElementById("mensagem").textContent = "Resposta incorreta. Tente novamente!";
+        function criarCorações() {
+            const numCorações = 20;
+            for (let i = 0; i < numCorações; i++) {
+                const coração = document.createElement('div');
+                coração.className = 'heart';
+                coração.style.left = `${Math.random() * 100}vw`;
+                coração.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                document.body.appendChild(coração);
             }
         }
-        
-        function onScanSuccess(decodedText) {
+        function onScanSuccess(decodedText, decodedResult) {
             document.getElementById('qr-reader-results').innerHTML = `Código QR Lido: ${decodedText}`;
         }
-        
-        let scanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: 250 });
-        scanner.render(onScanSuccess);
+        var html5QrcodeScanner = new Html5QrcodeScanner(
+            "qr-reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess);
     </script>
 </body>
 </html>
