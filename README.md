@@ -10,7 +10,7 @@
             text-align: center;
             margin: 0;
             padding: 0;
-            background: url(https://drive.google.com/file/d/1ucn22uaFBDVc2sIo-HpdSvqhU_lK0oT-/view?usp=drive_link) no-repeat center center fixed;
+            background: url('https://drive.google.com/uc?id=1ucn22uaFBDVc2sIo-HpdSvqhU_lK0oT-') no-repeat center center fixed;
             background-size: cover;
             color: #5d5151;
             overflow: hidden;
@@ -68,7 +68,7 @@
             position: absolute;
             width: 50px;
             height: 50px;
-            background: url(https://drive.google.com/file/d/17jgRNtqBFcVhr4b-S4-Ko6pYagFMdqSD/view?usp=drive_link) no-repeat center center;
+            background: url('https://drive.google.com/uc?id=17jgRNtqBFcVhr4b-S4-Ko6pYagFMdqSD') no-repeat center center;
             background-size: cover;
             animation: float 5s infinite;
             opacity: 0.8;
@@ -81,7 +81,7 @@
     </style>
 </head>
 <body>
-    <img id="brasao" src=(https://drive.google.com/file/d/1JeGOidonTIDj0Z0vuEC-jjRM6CAoBpBX/view?usp=drive_link) alt="Brasão UniGOIAS">
+    <img id="brasao" src="https://drive.google.com/uc?id=1JeGOidonTIDj0Z0vuEC-jjRM6CAoBpBX" alt="Brasão UniGOIAS">
     <h1>Bem-vinda à Caça ao Tesouro Romântica!</h1>
     <p>Resolva as charadas para encontrar o presente final. Insira a resposta correta para receber a localização do QR Code com a próxima pista. <span class="heart">&#x2764;</span></p>
     
