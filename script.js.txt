@@ -1,0 +1,33 @@
+document.getElementById('user-nome').innerText = nome;
+document.getElementById('user-cidade').innerText = cidade;
+document.getElementById('user-data-jogo').innerText = dataJogo;
+
+// Esconde o formulário e mostra a próxima etapa do jogo
+document.getElementById('identification-form').style.display = 'none';
+document.getElementById('game-container').style.display = 'block';
+
+// Inicializa as pistas e embaralha
+pistas = [...pistasOriginais].sort(() => Math.random() - 0.5);
+indiceAtual = 0;
+
+// Exibe a primeira pista
+exibirPista(indiceAtual);
+});
+
+function exibirPista(indice) {
+    if (indice >= pistas.length) {
+        document.getElementById('pista-container').innerHTML = "<h2>Parabéns! Você concluiu a caça ao tesouro!</h2>";
+        return;
+    }
+
+    const pista = pistas[indice];
+    document.getElementById('charada').innerText = pista.charada;
+    document.getElementById('curiosidade').innerText = pista.curiosidade;
+    document.getElementById('local-imagem').src = pista.foto;
+}
+
+// Botão para avançar para a próxima pista
+document.getElementById('btn-proxima-pista').addEventListener('click', function() {
+    indiceAtual++;
+    exibirPista(indiceAtual);
+});
