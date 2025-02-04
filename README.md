@@ -26,6 +26,7 @@
             margin: 20px auto;
             max-width: 600px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s;
         }
         button {
             padding: 15px 20px;
@@ -35,20 +36,42 @@
             color: #ffffff;
             border-radius: 8px;
             font-size: 18px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.3s;
         }
         button:hover {
             background-color: #e91e63;
+            transform: scale(1.1);
         }
         #mapa {
             width: 100%;
             height: 300px;
             margin-top: 10px;
         }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .correct {
+            color: green;
+            font-weight: bold;
+            animation: correctAnimation 1s forwards;
+        }
+        .incorrect {
+            color: red;
+            font-weight: bold;
+            animation: incorrectAnimation 1s forwards;
+        }
+        @keyframes correctAnimation {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+        @keyframes incorrectAnimation {
+            from { transform: scale(1); }
+            to { transform: scale(0.9); }
+        }
     </style>
 </head>
 <body>
-
     <div id="inicio">
         <h1>🌸 Caça ao Tesouro Romântica - Florianópolis 🌸</h1>
         <p>Insira sua chave de acesso:</p>
@@ -62,6 +85,11 @@
         <button onclick="verificarLocalizacao()">Verificar Localização</button>
         <div id="mapa"></div>
     </div>
+
+    <!-- Adicionando sons -->
+    <audio id="somCorreto" src="https://www.soundjay.com/button/beep-07.wav"></audio>
+    <audio id="somIncorreto" src="https://www.soundjay.com/button/beep-10.wav"></audio>
+    <audio id="musicaFundo" src="https://www.soundjay.com/nature/sounds/rain-01.mp3" loop></audio>
 
     <script>
         const pistasOriginais = [
@@ -88,6 +116,7 @@
             document.getElementById("inicio").style.display = "none";
             document.getElementById("pista-container").style.display = "block";
             mostrarPista();
+            document.getElementById("musicaFundo").play();
         }
 
         function embaralharPistas(chave) {
@@ -128,15 +157,11 @@
                     const distancia = calcularDistancia(latUsuario, longUsuario, latPista, longPista);
 
                     if (distancia < 0.2) {
-                        indiceAtual++;
-                        if (indiceAtual < pistas.length) {
-                            mostrarPista();
-                        } else {
-                            document.getElementById("pista").textContent = "🎉 Parabéns! Você encontrou o tesouro romântico! 🎁";
-                            document.getElementById("mensagem").textContent = "";
-                        }
+                        desbloquearProximaPista();
                     } else {
                         document.getElementById("mensagem").textContent = "📍 Você ainda não chegou ao local certo! Continue procurando!";
+                        const somIncorreto = document.getElementById("somIncorreto");
+                        somIncorreto.play();
                     }
                 });
             } else {
@@ -157,6 +182,28 @@
                       Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
                       Math.sin(dLon/2) * Math.sin(dLon/2);
             return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+        }
+
+        function desbloquearProximaPista() {
+            const somCorreto = document.getElementById("somCorreto");
+            somCorreto.play();
+            document.getElementById("mensagem").textContent = pistas[indiceAtual].proximaPista;
+            const qrCodeImage = document.createElement('img');
+            qrCodeImage.src = pistas[indiceAtual].qrCode;
+            qrCodeImage.alt = "QR Code";
+            qrCodeImage.style.maxWidth = "200px";
+            document.getElementById("mensagem").appendChild(qrCodeImage);
+            mostrarMapa(pistas[indiceAtual].latitude, pistas[indiceAtual].longitude);
+            indiceAtual++;
+            if (indiceAtual < pistas.length) {
+                setTimeout(() => {
+                    mostrarPista();
+                    document.getElementById("mensagem").textContent = "";
+                }, 3000);
+            } else {
+                document.getElementById("pista").textContent = "🎉 Parabéns! Você encontrou o tesouro romântico! 🎁";
+                document.getElementById("mensagem").textContent = "";
+            }
         }
     </script>
 </body>
