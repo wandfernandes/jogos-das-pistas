@@ -157,7 +157,11 @@
         function verificarResposta(resposta) {
             if (resposta === pistas[indiceAtual].resposta) {
                 document.getElementById("mensagem").textContent = pistas[indiceAtual].proximaPista;
-                document.getElementById("mensagem").innerHTML += `<br><img src="${pistas[indiceAtual].qrCode}" alt="QR Code" style="max-width: 200px;">`;
+                const qrCodeImage = document.createElement('img');
+                qrCodeImage.src = pistas[indiceAtual].qrCode;
+                qrCodeImage.alt = "QR Code";
+                qrCodeImage.style.maxWidth = "200px";
+                document.getElementById("mensagem").appendChild(qrCodeImage);
                 mostrarMapa(pistas[indiceAtual].proximaPista);
                 indiceAtual++;
                 if (indiceAtual < pistas.length) {
@@ -193,7 +197,6 @@
         // Leitor de QR Code
         function onScanSuccess(decodedText, decodedResult) {
             document.getElementById('qr-reader-results').innerHTML = `Código QR Lido: ${decodedText}`;
-            verificarResposta(decodedText);
         }
 
         var html5QrcodeScanner = new Html5QrcodeScanner(
