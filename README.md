@@ -9,25 +9,41 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 50px;
+            background-color: #f0f0f0;
         }
         #pista-container {
             display: none;
             margin-top: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
             animation: fadeIn 1s;
         }
         input {
             padding: 10px;
             width: 300px;
             margin-top: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
         }
         button {
             padding: 10px 15px;
             cursor: pointer;
             margin-top: 10px;
+            border: none;
+            background-color: #5cb85c;
+            color: #ffffff;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #4cae4c;
         }
         #mensagem {
             margin-top: 20px;
             font-weight: bold;
+            color: #333333;
         }
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -47,7 +63,12 @@
     </div>
     
     <button onclick="iniciarJogo()">Iniciar Jogo</button>
+
+    <!-- Adicionando o leitor de QR Code -->
+    <div id="qr-reader" style="width: 500px; margin: 20px auto;"></div>
+    <p id="qr-reader-results"></p>
     
+    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
     <script>
         const pistas = [
             {
@@ -108,6 +129,15 @@
                 document.getElementById("mensagem").textContent = "Resposta incorreta. Tente novamente!";
             }
         }
+
+        // Leitor de QR Code
+        function onScanSuccess(decodedText, decodedResult) {
+            document.getElementById('qr-reader-results').innerHTML = `Código QR Lido: ${decodedText}`;
+        }
+
+        var html5QrcodeScanner = new Html5QrcodeScanner(
+            "qr-reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess);
     </script>
 </body>
 </html>
