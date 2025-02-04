@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caça ao Tesouro </title>
+    <title>Caça ao Tesouro Romântica</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -80,7 +80,7 @@
         <h1>Bem-vindo(a), <span id="user-nome"></span>!</h1>
         <p>Origem: <span id="user-cidade"></span></p>
         <p>Data do Jogo: <span id="user-data"></span></p>
-        <img src="https://drive.google.com/file/d/1yG53CU4XX6-Aap6FJBHl_PLKvccgXg0j/view?usp=drive_link" alt="Imagem Enigmática">
+        <img src="https://example.com/enigmatic-image.jpg" alt="Imagem Enigmática">
         <button onclick="mostrarPista()">Começar o Jogo</button>
     </div>
     <div id="pista-container">
@@ -107,7 +107,6 @@
 
         let pistas = [];
         let indiceAtual = 0;
-        let avatarSelecionado = '';
 
         document.getElementById('identification-form').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -163,8 +162,17 @@
 
         function verificarLocalizacao() {
             // Coordenadas fixas para facilitar os testes
-            const latUsuario = -27.5969;  // Latitude da Lagoa da Conceição
-            const longUsuario = -48.4846; // Longitude da Lagoa da Conceição
+            const coordenadasSimuladas = [
+                { latitude: -27.5969, longitude: -48.4846 },  // Lagoa da Conceição
+                { latitude: -27.5973, longitude: -48.5515 },  // Ponte Hercílio Luz
+                { latitude: -27.6206, longitude: -48.4354 },  // Dunas da Joaquina
+                { latitude: -27.4368, longitude: -48.4916 },  // Praia de Jurerê
+                { latitude: -27.5951, longitude: -48.5480 },  // Mercado Público
+                { latitude: -27.5888, longitude: -48.5350 }   // Mirante do Morro da Cruz
+            ];
+
+            const latUsuario = coordenadasSimuladas[indiceAtual].latitude;
+            const longUsuario = coordenadasSimuladas[indiceAtual].longitude;
             const latPista = pistas[indiceAtual].latitude;
             const longPista = pistas[indiceAtual].longitude;
 
@@ -198,12 +206,6 @@
             const somCorreto = document.getElementById("somCorreto");
             somCorreto.play();
             document.getElementById("mensagem").textContent = pistas[indiceAtual].proximaPista;
-            const qrCodeImage = document.createElement('img');
-            qrCodeImage.src = pistas[indiceAtual].qrCode;
-            qrCodeImage.alt = "QR Code";
-            qrCodeImage.style.maxWidth = "200px";
-            document.getElementById("mensagem").appendChild(qrCodeImage);
-            mostrarMapa(pistas[indiceAtual].latitude, pistas[indiceAtual].longitude);
             indiceAtual++;
             if (indiceAtual < pistas.length) {
                 setTimeout(() => {
