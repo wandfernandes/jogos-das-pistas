@@ -200,25 +200,20 @@
         }
 
         function verificarLocalizacao() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((posicao) => {
-                    const latUsuario = posicao.coords.latitude;
-                    const longUsuario = posicao.coords.longitude;
-                    const latPista = pistas[indiceAtual].latitude;
-                    const longPista = pistas[indiceAtual].longitude;
+            // Coordenadas fixas para facilitar os testes
+            const latUsuario = -27.5969;  // Latitude da Lagoa da Conceição
+            const longUsuario = -48.4846; // Longitude da Lagoa da Conceição
+            const latPista = pistas[indiceAtual].latitude;
+            const longPista = pistas[indiceAtual].longitude;
 
-                    const distancia = calcularDistancia(latUsuario, longUsuario, latPista, longPista);
+            const distancia = calcularDistancia(latUsuario, longUsuario, latPista, longPista);
 
-                    if (distancia < 0.2) {
-                        desbloquearProximaPista();
-                    } else {
-                        document.getElementById("mensagem").textContent = "📍 Você ainda não chegou ao local certo! Continue procurando!";
-                        const somIncorreto = document.getElementById("somIncorreto");
-                        somIncorreto.play();
-                    }
-                });
+            if (distancia < 0.2) {
+                desbloquearProximaPista();
             } else {
-                alert("Geolocalização não suportada no seu navegador.");
+                document.getElementById("mensagem").textContent = "📍 Você ainda não chegou ao local certo! Continue procurando!";
+                const somIncorreto = document.getElementById("somIncorreto");
+                somIncorreto.play();
             }
         }
 
